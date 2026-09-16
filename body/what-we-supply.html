@@ -1,0 +1,104 @@
+<section class="page-hero page-hero-3d section-dark">
+  <div class="page-hero-canvas-wrap"><canvas class="page-hero-canvas"></canvas></div>
+  <div class="page-hero-vignette"></div>
+  <div class="container">
+    <h1 class="reveal">Materials That Move Industry.</h1>
+    <p class="lede reveal">Sorted, graded metal stock supplied to manufacturing units, fabricators and processors on request. Pricing depends on grade, quantity and availability at the time of enquiry.</p>
+  </div>
+  <div class="page-hero-line"></div>
+</section>
+
+<section class="section section-elevated">
+  <div class="container">
+    <div class="grid grid-3" data-stagger>
+      <div class="product-card has-photo" style="min-height:320px; --card-bg: url('../images/products/sorted-stainless-steel-scrap.jpg') center/cover;">
+        <div class="tag">Stainless Steel</div>
+        <h3>Sorted Stainless Steel Scrap</h3>
+        <p>Cleaned and sorted stainless scrap, ready for re-melting or re-processing.</p>
+        <button class="btn-ghost" data-modal-open="supply-modal" data-material="Sorted Stainless Steel Scrap">Request Material</button>
+      </div>
+      <div class="product-card has-photo" style="min-height:320px; --card-bg: url('../images/products/graded-metal-scrap.jpg') center/cover;">
+        <div class="tag">Graded</div>
+        <h3>Graded Metal Scrap</h3>
+        <p>Metal scrap graded by type and condition for consistent processing input.</p>
+        <button class="btn-ghost" data-modal-open="supply-modal" data-material="Graded Metal Scrap">Request Material</button>
+      </div>
+      <div class="product-card has-photo" style="min-height:320px; --card-bg: url('../images/products/alloy-materials.jpg') center/cover;">
+        <div class="tag">Alloy</div>
+        <h3>Alloy Metal Stock</h3>
+        <p>Mixed alloy material sorted by composition, supplied against confirmed orders.</p>
+        <button class="btn-ghost" data-modal-open="supply-modal" data-material="Alloy Metal Stock">Request Material</button>
+      </div>
+      <div class="product-card has-photo" style="min-height:320px; --card-bg: url('../images/products/industrial-scrap.jpg') center/cover;">
+        <div class="tag">Industrial</div>
+        <h3>Industrial Raw Material Scrap</h3>
+        <p>Bulk industrial scrap suited to foundries and re-rolling operations.</p>
+        <button class="btn-ghost" data-modal-open="supply-modal" data-material="Industrial Raw Material Scrap">Request Material</button>
+      </div>
+      <div class="product-card has-photo" style="min-height:320px; --card-bg: url('../images/products/non-ferrous-metal-stock.jpg') center/cover;">
+        <div class="tag">Non-Ferrous</div>
+        <h3>Non-Ferrous Metal Stock</h3>
+        <p>Copper, brass and aluminium stock supplied in sorted, ready-to-use form.</p>
+        <button class="btn-ghost" data-modal-open="supply-modal" data-material="Non-Ferrous Metal Stock">Request Material</button>
+      </div>
+      <div class="product-card" style="min-height:320px; --card-bg: linear-gradient(155deg,#e5e8ea,#ffffff 75%); display:flex; align-items:center; justify-content:center; text-align:center;">
+        <div>
+          <h3>Don't See What You Need?</h3>
+          <p>Tell us your requirement directly — we'll check availability.</p>
+          <button class="btn btn-outline mt-sm" data-modal-open="supply-modal" data-material="">Request Material</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band section-dark">
+  <div class="container">
+    <div class="eyebrow" style="justify-content:center;">Pricing On Request</div>
+    <h2 class="reveal">We Don't List Prices Publicly — Ask Us Directly.</h2>
+    <p class="lede reveal" style="margin-inline:auto; text-align:center;">Rates depend on grade, quantity and market conditions at the time of enquiry.</p>
+    <div class="actions">
+      <button class="btn btn-primary magnetic" data-modal-open="supply-modal" data-material="">Request Material</button>
+      <a data-wa href="#" class="btn btn-outline magnetic">WhatsApp Us</a>
+    </div>
+  </div>
+</section>
+
+<div class="modal-overlay" id="supply-modal">
+  <div class="modal-box">
+    <button class="modal-close" data-modal-close aria-label="Close">&times;</button>
+    <div class="eyebrow">Request Material</div>
+    <h3 class="h2" style="font-size:clamp(1.4rem,3vw,2rem); margin-bottom:20px;">Tell Us What You Need.</h3>
+    <form data-wa-form="supply">
+      <div class="form-grid">
+        <div class="field"><label for="rm-name">Name</label><input id="rm-name" name="Name" type="text" required></div>
+        <div class="field"><label for="rm-company">Company</label><input id="rm-company" name="Company" type="text"></div>
+        <div class="field"><label for="rm-phone">Phone</label><input id="rm-phone" name="Phone" type="tel" required></div>
+        <div class="field"><label for="rm-material">Material Needed</label><input id="rm-material" name="Material Needed" type="text" placeholder="e.g. Sorted Stainless Steel Scrap" value=""></div>
+        <div class="field"><label for="rm-qty">Quantity Required</label><input id="rm-qty" name="Quantity Required" type="text" placeholder="e.g. 1 tonne / month"></div>
+        <div class="field"><label for="rm-location">Delivery Location</label><input id="rm-location" name="Delivery Location" type="text"></div>
+        <div class="field full"><label for="rm-msg">Message</label><textarea id="rm-msg" name="Message"></textarea></div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block mt-md">Send Request</button>
+      <p class="form-note">Submitting opens WhatsApp with your request pre-filled.</p>
+    </form>
+    <div class="form-success">
+      <div class="check">✓</div>
+      <h3>Request Ready</h3>
+      <p class="text-muted mt-sm">Tap below to send it on WhatsApp.</p>
+      <div class="form-actions-row">
+        <a data-wa-dynamic href="#" target="_blank" rel="noopener" class="btn btn-primary">Send On WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('[data-modal-open="supply-modal"]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var material = btn.getAttribute('data-material') || '';
+    var input = document.getElementById('rm-material');
+    if (input && material) input.value = material;
+  });
+});
+</script>

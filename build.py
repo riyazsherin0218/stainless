@@ -1,0 +1,262 @@
+#!/usr/bin/env python3
+"""Assembles final static HTML pages for THE STAINLESS (INDIA) site
+from shared header/footer/scripts + per-page body fragments."""
+import os
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+BODY_DIR = os.path.join(ROOT, "body")
+
+NAV_ITEMS = [
+    ("index.html", "Home"),
+    ("about.html", "About"),
+    ("products.html", "Products"),
+    ("what-we-buy.html", "What We Buy"),
+    ("what-we-supply.html", "What We Supply"),
+    ("applications.html", "Applications"),
+    ("certificates.html", "Certificates"),
+    ("contact.html", "Contact"),
+]
+
+PAGES = [
+    # (filename, title, meta description)
+    ("index.html", "THE STAINLESS (INDIA) | Premium Stainless Steel & Metal Scrap Trading, Madurai",
+     "THE STAINLESS (INDIA) is a Madurai-based stainless steel and metal scrap trading company — precision sourcing, quality materials and dependable supply for industrial buyers across Tamil Nadu."),
+    ("about.html", "About Us | THE STAINLESS (INDIA)",
+     "THE STAINLESS (INDIA), based in Madurai, Tamil Nadu — a registered MSME trading in stainless steel and metal scrap, built on quality, transparency and long-term industrial relationships."),
+    ("products.html", "Products | THE STAINLESS (INDIA)",
+     "Explore the stainless steel and metal scrap material categories traded and supplied by THE STAINLESS (INDIA), Madurai."),
+    ("what-we-buy.html", "What We Buy | THE STAINLESS (INDIA)",
+     "THE STAINLESS (INDIA) purchases stainless steel scrap and industrial metal scrap directly from businesses and individuals across Tamil Nadu. Submit your material for a quote."),
+    ("what-we-supply.html", "What We Supply | THE STAINLESS (INDIA)",
+     "Materials supplied by THE STAINLESS (INDIA) for industrial, fabrication and manufacturing use. Request material availability and rates."),
+    ("applications.html", "Applications | THE STAINLESS (INDIA)",
+     "Where THE STAINLESS (INDIA)'s materials are put to work — manufacturing, fabrication and industrial processing."),
+    ("certificates.html", "Certificates | THE STAINLESS (INDIA)",
+     "Verified registrations and certifications held by THE STAINLESS (INDIA) — GST, Udyam (MSME), IEC, ISO 9001, ISO 14001 and MSME Sustainable ZED Bronze certification."),
+    ("contact.html", "Contact | THE STAINLESS (INDIA)",
+     "Get in touch with THE STAINLESS (INDIA), Madurai. Call, WhatsApp or send an enquiry for stainless steel and metal scrap trading."),
+    ("privacy-policy.html", "Privacy Policy | THE STAINLESS (INDIA)",
+     "Privacy policy for THE STAINLESS (INDIA) — how enquiry and contact information submitted through this website is handled."),
+    ("terms-and-conditions.html", "Terms & Conditions | THE STAINLESS (INDIA)",
+     "Terms and conditions for using the THE STAINLESS (INDIA) website and for material trading enquiries."),
+]
+
+def nav_links(current, mobile=False):
+    out = []
+    for href, label in NAV_ITEMS:
+        active = " active" if href == current else ""
+        out.append(f'<a href="{href}" class="{active.strip()}">{label}</a>')
+    return "\n        ".join(out)
+
+def head(title, desc, current):
+    canonical = current
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title}</title>
+<meta name="description" content="{desc}">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/logo-512.png">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/logo-512.png">
+<link rel="canonical" href="{canonical}">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/flags.css">
+<script type="application/ld+json">
+{{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "THE STAINLESS (INDIA)",
+  "alternateName": "TSI",
+  "description": "Stainless steel and metal scrap trading, buying and supplying company based in Madurai, Tamil Nadu.",
+  "address": {{
+    "@type": "PostalAddress",
+    "streetAddress": "18B, Gate Lock Road, New Ramnad Road, Anuppanadi",
+    "addressLocality": "Madurai",
+    "addressRegion": "Tamil Nadu",
+    "postalCode": "625009",
+    "addressCountry": "IN"
+  }},
+  "telephone": "+91-93677-25423",
+  "email": "thestainlessindia@gmail.com",
+  "geo": {{ "@type": "GeoCoordinates", "latitude": 9.911391316091537, "longitude": 78.13796622169501 }},
+  "department": [
+    {{
+      "@type": "Organization",
+      "name": "THE STAINLESS (INDIA) — Registered Office",
+      "address": {{
+        "@type": "PostalAddress",
+        "streetAddress": "Block-A, 606 Prahladnagar Trade Center, B/H Titanium City Center, Vejalpur",
+        "addressLocality": "Ahmedabad",
+        "addressRegion": "Gujarat",
+        "postalCode": "380051",
+        "addressCountry": "IN"
+      }}
+    }}
+  ]
+}}
+</script>
+</head>
+"""
+
+def header_html(current):
+    return f"""<body>
+<div class="scroll-progress"></div>
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="images/logo-transparent.png" alt="THE STAINLESS (INDIA) logo">
+      <span class="brand-text notranslate" translate="no">
+        <span class="b-main">The Stainless</span>
+        <span class="b-sub">(India)</span>
+      </span>
+    </a>
+    <nav class="nav-desktop">
+        {nav_links(current)}
+    </nav>
+    <div class="header-actions">
+      <div class="lang-switch notranslate" translate="no" data-lang-switcher></div>
+      <a href="contact.html" class="btn btn-primary magnetic">Get A Quote</a>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div id="google_translate_element"></div>
+
+<div class="mobile-menu">
+  <nav>
+    {nav_links(current, True)}
+  </nav>
+  <a href="contact.html" class="btn btn-primary btn-block">Get A Quote</a>
+  <div class="mobile-menu-foot">
+    <span class="js-phone-display"></span><br>
+    thestainlessindia@gmail.com
+  </div>
+</div>
+"""
+
+FOOTER = """
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <img src="images/logo-transparent.png" alt="THE STAINLESS (INDIA) logo">
+          <span class="brand-text notranslate" translate="no">
+            <span class="b-main">The Stainless</span>
+            <span class="b-sub">(India)</span>
+          </span>
+        </a>
+        <p>A Madurai-based stainless steel and metal scrap trading company focused on quality materials, dependable sourcing and long-term industrial relationships.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="what-we-buy.html">What We Buy</a></li>
+          <li><a href="what-we-supply.html">What We Supply</a></li>
+          <li><a href="applications.html">Applications</a></li>
+          <li><a href="certificates.html">Certificates</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a data-tel href="#" class="js-phone-display"></a></li>
+          <li><a data-wa href="#">WhatsApp Us</a></li>
+          <li><a href="mailto:thestainlessindia@gmail.com">thestainlessindia@gmail.com</a></li>
+          <li><strong>Main Branch — Madurai</strong><br>18B, Gate Lock Road,<br>New Ramnad Road, Anuppanadi,<br>Madurai – 625009, Tamil Nadu</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Registered Office</h4>
+        <ul>
+          <li>Block-A, 606 Prahladnagar Trade Center,<br>B/H Titanium City Center, Vejalpur,<br>Ahmedabad, Gujarat – 380051</li>
+          <li style="margin-top:10px;">GSTIN: 33BAIPB9194B1ZX</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-and-conditions.html">Terms &amp; Conditions</a></li>
+          <li><a href="certificates.html">Certificates</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-muted" style="font-size:13px; line-height:1.7; max-width:900px; margin-top:6px;">Processing Plants: Tiruchirappalli (Trichy), Kollam, Thiruvananthapuram, Nagercoil, Dadra, Pondicherry.</p>
+    <div class="footer-line"></div>
+    <div class="footer-bottom">
+      <span>&copy; <span class="js-year"></span> THE STAINLESS (INDIA). All rights reserved.</span>
+      <span class="footer-tagline">Built On Material. Driven By Trust.</span>
+    </div>
+  </div>
+</footer>
+
+<a class="whatsapp-float" data-wa href="#" aria-label="Chat on WhatsApp">
+  <span class="whatsapp-tooltip">Chat with us</span>
+  <svg viewBox="0 0 32 32"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.35.66 4.55 1.8 6.44L4 29l7.72-1.75a12.4 12.4 0 0 0 4.3.77h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3zm0 21.86h-.01c-1.5 0-2.98-.4-4.26-1.16l-.3-.18-4.58 1.04 1.06-4.46-.2-.31a9.9 9.9 0 0 1-1.51-5.27c0-5.46 4.44-9.9 9.9-9.9 2.64 0 5.13 1.03 6.99 2.9a9.83 9.83 0 0 1 2.9 6.99c0 5.46-4.45 9.9-9.99 9.9zm5.43-7.41c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.6-.91-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/></svg>
+</a>
+
+<div class="mobile-bar">
+  <div class="mobile-bar-inner">
+    <a data-tel href="#" class="primary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Call
+    </a>
+    <a data-wa href="#">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.1-1.33A9.94 9.94 0 0 0 12.02 22C17.5 22 22 17.52 22 12S17.5 2 12.02 2z" opacity=".18"/><path d="M16.02 8.5c-.2-.1-1.18-.58-1.36-.65-.18-.06-.31-.1-.44.1-.13.2-.51.65-.63.78-.11.13-.23.15-.43.05-.2-.1-.85-.31-1.61-1-.6-.53-1-1.19-1.11-1.39-.12-.2 0-.3.09-.4.09-.1.2-.23.3-.35.1-.11.13-.2.2-.33.06-.13.03-.25-.02-.35-.05-.1-.44-1.06-.6-1.45-.16-.38-.32-.33-.44-.33h-.38c-.13 0-.34.05-.52.25-.18.2-.68.66-.68 1.62s.7 1.88.79 2.01c.1.13 1.38 2.1 3.34 2.94.47.2.83.32 1.12.41.47.15.9.13 1.24.08.38-.06 1.18-.48 1.34-.94.17-.46.17-.86.12-.94-.05-.09-.18-.14-.38-.24z"/></svg>
+      WhatsApp
+    </a>
+    <a href="contact.html">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s7-6.5 7-11.5A7 7 0 0 0 5 8.5C5 13.5 12 20 12 20z"/><circle cx="12" cy="8.5" r="2.5"/></svg>
+      Enquire
+    </a>
+  </div>
+</div>
+
+<div class="lightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-nav prev" aria-label="Previous">&larr;</button>
+    <img src="" alt="">
+    <button class="lightbox-nav next" aria-label="Next">&rarr;</button>
+    <div class="lightbox-caption"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/translate.js"></script>
+<script src="js/three-hero.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
+"""
+
+def build():
+    for filename, title, desc in PAGES:
+        frag_path = os.path.join(BODY_DIR, filename)
+        with open(frag_path, "r", encoding="utf-8") as f:
+            body_content = f.read()
+        html = head(title, desc, filename) + header_html(filename) + body_content + FOOTER
+        out_path = os.path.join(ROOT, filename)
+        with open(out_path, "w", encoding="utf-8") as f:
+            f.write(html)
+        print("built", out_path)
+
+if __name__ == "__main__":
+    os.makedirs(BODY_DIR, exist_ok=True)
+    build()
